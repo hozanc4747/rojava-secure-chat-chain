@@ -24,21 +24,21 @@ const ChatWindow = ({ chatId, contactName, contactImage, isOnline }: ChatWindowP
     {
       id: "1",
       text: "مرحباً! كيف حالك اليوم؟",
-      isSent: true,
+      isSent: false,
       timestamp: "٢:٣٠ م",
       isRead: true
     },
     {
       id: "2", 
       text: "الحمد لله بخير، وأنت كيف حالك؟",
-      isSent: false,
+      isSent: true,
       timestamp: "٢:٣٢ م",
       isRead: true
     },
     {
       id: "3",
       text: "أنا بخير أيضاً، شكراً لك. هل جربت تطبيق Rojava الجديد؟",
-      isSent: true,
+      isSent: false,
       timestamp: "٢:٣٥ م",
       isRead: false
     }
@@ -48,7 +48,7 @@ const ChatWindow = ({ chatId, contactName, contactImage, isOnline }: ChatWindowP
     const newMessage: Message = {
       id: Date.now().toString(),
       text: messageText,
-      isSent: false,
+      isSent: true,
       timestamp: new Date().toLocaleTimeString('ar-SA', { 
         hour: '2-digit', 
         minute: '2-digit',

@@ -12,21 +12,21 @@ const MessageBubble = ({ message, isSent, timestamp, isRead }: MessageBubbleProp
   return (
     <div className={cn(
       "flex mb-4 animate-fade-in",
-      isSent ? "justify-start" : "justify-end"
+      isSent ? "justify-end" : "justify-start"
     )}>
       <div className={cn(
         "max-w-[70%] px-4 py-3 rounded-2xl shadow-lg transition-all duration-200 hover:shadow-xl",
         isSent 
-          ? "bg-card border border-border text-foreground rounded-br-md" 
-          : "message-gradient text-white rounded-bl-md"
+          ? "message-gradient text-white rounded-bl-md" 
+          : "bg-card border border-border text-foreground rounded-br-md"
       )}>
         <p className="text-sm leading-relaxed">{message}</p>
         <div className={cn(
           "flex items-center justify-end gap-2 mt-2 text-xs",
-          isSent ? "text-muted-foreground" : "text-white/70"
+          isSent ? "text-white/70" : "text-muted-foreground"
         )}>
           <span>{timestamp}</span>
-          {!isSent && (
+          {isSent && (
             <span className={cn(
               "text-xs",
               isRead ? "text-blue-300" : "text-white/50"
