@@ -5,6 +5,7 @@ import ChatWindow from "@/components/ChatWindow";
 
 const Index = () => {
   const [selectedChatId, setSelectedChatId] = useState<string>("1");
+  const [showSidebar, setShowSidebar] = useState(true);
 
   const mockChats = [
     {
@@ -53,31 +54,46 @@ const Index = () => {
 
   return (
     <div className="h-screen flex bg-background overflow-hidden">
-      <Sidebar 
-        chats={mockChats}
-        selectedChatId={selectedChatId}
-        onSelectChat={setSelectedChatId}
-      />
-      
-      {selectedChat ? (
-        <ChatWindow
-          chatId={selectedChat.id}
-          contactName={selectedChat.name}
-          isOnline={selectedChat.isOnline}
+      {/* Mobile: Conditional Sidebar */}
+      <div className={`${showSidebar ? 'flex' : 'hidden'} md:flex`}>
+        <Sidebar 
+          chats={mockChats}
+          selectedChatId={selectedChatId}
+          onSelectChat={(chatId) => {
+            setSelectedChatId(chatId);
+            setShowSidebar(false); // Hide sidebar on mobile after selection
+          }}
         />
-      ) : (
-        <div className="flex-1 flex items-center justify-center bg-background">
-          <div className="text-center">
-            <div className="text-6xl mb-4">💬</div>
-            <h2 className="text-2xl font-bold mb-2 message-gradient bg-clip-text text-transparent">
-              مرحباً بك في Rojava
-            </h2>
-            <p className="text-muted-foreground">
-              اختر محادثة لبدء المراسلة
-            </p>
+      </div>
+      
+      {/* Chat Window */}
+      <div className={`flex-1 ${showSidebar ? 'hidden md:flex' : 'flex'} flex-col`}>
+        {selectedChat ? (
+          <ChatWindow
+            chatId={selectedChat.id}
+            contactName={selectedChat.name}
+            isOnline={selectedChat.isOnline}
+            onBack={() => setShowSidebar(true)} // Show sidebar when back is pressed
+          />
+        ) : (
+          <div className="flex-1 flex items-center justify-center bg-background p-4">
+            <div className="text-center animate-bounce-in">
+              <div className="text-4xl md:text-6xl mb-4">💬</div>
+              <h2 className="text-xl md:text-2xl font-bold mb-2 ionic-gradient bg-clip-text text-transparent">
+                مرحباً بك في Rojava
+              </h2>
+              <p className="text-muted-foreground text-sm md:text-base">
+                شبكة دردشة لا مركزية آمنة ومشفرة
+              </p>
+              <div className="mt-4 text-xs text-muted-foreground">
+                <p>✓ مشفر من النهاية للنهاية</p>
+                <p>✓ لا مركزي وآمن</p>
+                <p>✓ استرداد المحادثات</p>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
